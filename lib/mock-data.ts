@@ -1,0 +1,326 @@
+import type { Asset, Category } from "./schemas/asset"
+import type { Ticket } from "./schemas/ticket"
+import type { User, OrgUnit, Company } from "./schemas/user"
+import type { DashboardSummary, AssetTrendData } from "./schemas/dashboard"
+
+// ============================================
+// MOCK DATA - Based on Zod schemas
+// ============================================
+
+const COMPANY_ID = "c1a2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6"
+
+export const mockCompany: Company = {
+  id: COMPANY_ID,
+  name: "Acme Corporation",
+  plan: "PRO",
+  createdAt: new Date("2024-01-15"),
+}
+
+export const mockUsers: User[] = [
+  {
+    id: "u1a2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6",
+    email: "admin@acme.com",
+    name: "김철수",
+    avatarUrl: null,
+    role: "ADMIN",
+    status: "ACTIVE",
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-01-15"),
+  },
+  {
+    id: "u2b3c4d5-e6f7-a8b9-c0d1-e2f3a4b5c6d7",
+    email: "manager@acme.com",
+    name: "이영희",
+    avatarUrl: null,
+    role: "MANAGER",
+    status: "ACTIVE",
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-02-01"),
+  },
+  {
+    id: "u3c4d5e6-f7a8-b9c0-d1e2-f3a4b5c6d7e8",
+    email: "member@acme.com",
+    name: "박민수",
+    avatarUrl: null,
+    role: "MEMBER",
+    status: "ACTIVE",
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-03-10"),
+  },
+]
+
+export const mockOrgUnits: OrgUnit[] = [
+  {
+    id: "o1a2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6",
+    name: "개발팀",
+    parentId: null,
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-01-15"),
+  },
+  {
+    id: "o2b3c4d5-e6f7-a8b9-c0d1-e2f3a4b5c6d7",
+    name: "디자인팀",
+    parentId: null,
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-01-15"),
+  },
+  {
+    id: "o3c4d5e6-f7a8-b9c0-d1e2-f3a4b5c6d7e8",
+    name: "마케팅팀",
+    parentId: null,
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-01-15"),
+  },
+]
+
+export const mockCategories: Category[] = [
+  {
+    id: "cat1a2b3-c4d5-e6f7-a8b9-c0d1e2f3a4b5",
+    name: "노트북",
+    parentId: null,
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-01-15"),
+  },
+  {
+    id: "cat2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6",
+    name: "모니터",
+    parentId: null,
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-01-15"),
+  },
+  {
+    id: "cat3c4d5-e6f7-a8b9-c0d1-e2f3a4b5c6d7",
+    name: "도메인",
+    parentId: null,
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-01-15"),
+  },
+  {
+    id: "cat4d5e6-f7a8-b9c0-d1e2-f3a4b5c6d7e8",
+    name: "SSL 인증서",
+    parentId: null,
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-01-15"),
+  },
+  {
+    id: "cat5e6f7-a8b9-c0d1-e2f3-a4b5c6d7e8f9",
+    name: "SaaS 구독",
+    parentId: null,
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-01-15"),
+  },
+]
+
+export const mockAssets: Asset[] = [
+  {
+    id: "a1a2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6",
+    name: "MacBook Pro 14인치",
+    description: "M3 Pro, 18GB RAM, 512GB SSD",
+    type: "TANGIBLE",
+    state: "IN_USE",
+    categoryId: "cat1a2b3-c4d5-e6f7-a8b9-c0d1e2f3a4b5",
+    assigneeId: "u1a2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6",
+    orgUnitId: "o1a2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6",
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-01-20"),
+    updatedAt: new Date("2024-06-15"),
+    tangibleFields: {
+      serialNumber: "C02XJ1KLJGH5",
+      purchasePrice: 3200000,
+      purchaseDate: new Date("2024-01-15"),
+      depreciationRate: 25,
+    },
+    intangibleFields: null,
+  },
+  {
+    id: "a2b3c4d5-e6f7-a8b9-c0d1-e2f3a4b5c6d7",
+    name: "Dell UltraSharp U2723QE",
+    description: "27인치 4K USB-C 허브 모니터",
+    type: "TANGIBLE",
+    state: "IN_USE",
+    categoryId: "cat2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6",
+    assigneeId: "u2b3c4d5-e6f7-a8b9-c0d1-e2f3a4b5c6d7",
+    orgUnitId: "o2b3c4d5-e6f7-a8b9-c0d1-e2f3a4b5c6d7",
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-02-10"),
+    updatedAt: new Date("2024-02-10"),
+    tangibleFields: {
+      serialNumber: "CN0RG42K74261",
+      purchasePrice: 890000,
+      purchaseDate: new Date("2024-02-05"),
+      depreciationRate: 20,
+    },
+    intangibleFields: null,
+  },
+  {
+    id: "a3c4d5e6-f7a8-b9c0-d1e2-f3a4b5c6d7e8",
+    name: "acme.com",
+    description: "회사 메인 도메인",
+    type: "INTANGIBLE",
+    state: "IN_USE",
+    categoryId: "cat3c4d5-e6f7-a8b9-c0d1-e2f3a4b5c6d7",
+    assigneeId: null,
+    orgUnitId: null,
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-01-15"),
+    updatedAt: new Date("2024-01-15"),
+    tangibleFields: null,
+    intangibleFields: {
+      expiryDate: new Date("2025-01-15"),
+      renewalCycle: "YEARLY",
+      accountInfo: "가비아",
+      url: "https://acme.com",
+    },
+  },
+  {
+    id: "a4d5e6f7-a8b9-c0d1-e2f3-a4b5c6d7e8f9",
+    name: "*.acme.com SSL",
+    description: "와일드카드 SSL 인증서",
+    type: "INTANGIBLE",
+    state: "IN_USE",
+    categoryId: "cat4d5e6-f7a8-b9c0-d1e2-f3a4b5c6d7e8",
+    assigneeId: null,
+    orgUnitId: null,
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-03-01"),
+    updatedAt: new Date("2024-03-01"),
+    tangibleFields: null,
+    intangibleFields: {
+      expiryDate: new Date("2025-03-01"),
+      renewalCycle: "YEARLY",
+      accountInfo: "DigiCert",
+      url: null,
+    },
+  },
+  {
+    id: "a5e6f7a8-b9c0-d1e2-f3a4-b5c6d7e8f9a0",
+    name: "Figma Enterprise",
+    description: "디자인 협업 툴 연간 구독",
+    type: "INTANGIBLE",
+    state: "IN_USE",
+    categoryId: "cat5e6f7-a8b9-c0d1-e2f3-a4b5c6d7e8f9",
+    assigneeId: null,
+    orgUnitId: "o2b3c4d5-e6f7-a8b9-c0d1-e2f3a4b5c6d7",
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-04-01"),
+    updatedAt: new Date("2024-04-01"),
+    tangibleFields: null,
+    intangibleFields: {
+      expiryDate: new Date("2025-04-01"),
+      renewalCycle: "YEARLY",
+      accountInfo: "design@acme.com",
+      url: "https://figma.com",
+    },
+  },
+  {
+    id: "a6f7a8b9-c0d1-e2f3-a4b5-c6d7e8f9a0b1",
+    name: "MacBook Pro 16인치",
+    description: "M2 Max, 32GB RAM, 1TB SSD",
+    type: "TANGIBLE",
+    state: "MAINTENANCE",
+    categoryId: "cat1a2b3-c4d5-e6f7-a8b9-c0d1e2f3a4b5",
+    assigneeId: "u3c4d5e6-f7a8-b9c0-d1e2-f3a4b5c6d7e8",
+    orgUnitId: "o1a2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6",
+    companyId: COMPANY_ID,
+    createdAt: new Date("2023-06-15"),
+    updatedAt: new Date("2024-11-01"),
+    tangibleFields: {
+      serialNumber: "C02YJ2KLJGH7",
+      purchasePrice: 4500000,
+      purchaseDate: new Date("2023-06-10"),
+      depreciationRate: 25,
+    },
+    intangibleFields: null,
+  },
+]
+
+export const mockTickets: Ticket[] = [
+  {
+    id: "t1a2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6",
+    title: "노트북 배터리 팽창 점검 요청",
+    description: "MacBook Pro 16인치 배터리가 팽창한 것 같습니다. 점검 부탁드립니다.",
+    status: "IN_PROGRESS",
+    priority: "HIGH",
+    requesterId: "u3c4d5e6-f7a8-b9c0-d1e2-f3a4b5c6d7e8",
+    assigneeId: "u1a2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6",
+    assetId: "a6f7a8b9-c0d1-e2f3-a4b5-c6d7e8f9a0b1",
+    tags: ["하드웨어", "긴급"],
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-11-01"),
+    updatedAt: new Date("2024-11-10"),
+  },
+  {
+    id: "t2b3c4d5-e6f7-a8b9-c0d1-e2f3a4b5c6d7",
+    title: "Figma 라이선스 추가 요청",
+    description: "신규 입사자 2명의 Figma 라이선스 추가 요청합니다.",
+    status: "OPEN",
+    priority: "MEDIUM",
+    requesterId: "u2b3c4d5-e6f7-a8b9-c0d1-e2f3a4b5c6d7",
+    assigneeId: null,
+    assetId: "a5e6f7a8-b9c0-d1e2-f3a4-b5c6d7e8f9a0",
+    tags: ["SaaS", "라이선스"],
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-11-15"),
+    updatedAt: new Date("2024-11-15"),
+  },
+  {
+    id: "t3c4d5e6-f7a8-b9c0-d1e2-f3a4b5c6d7e8",
+    title: "SSL 인증서 갱신 완료",
+    description: "acme.com 와일드카드 SSL 인증서 갱신 완료했습니다.",
+    status: "COMPLETED",
+    priority: "HIGH",
+    requesterId: "u1a2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6",
+    assigneeId: "u1a2b3c4-d5e6-f7a8-b9c0-d1e2f3a4b5c6",
+    assetId: "a4d5e6f7-a8b9-c0d1-e2f3-a4b5c6d7e8f9",
+    tags: ["인증서", "갱신"],
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-10-20"),
+    updatedAt: new Date("2024-10-25"),
+  },
+  {
+    id: "t4d5e6f7-a8b9-c0d1-e2f3-a4b5c6d7e8f9",
+    title: "신규 모니터 구매 요청",
+    description: "개발팀 신규 입사자를 위한 모니터 구매를 요청합니다.",
+    status: "OPEN",
+    priority: "LOW",
+    requesterId: "u2b3c4d5-e6f7-a8b9-c0d1-e2f3a4b5c6d7",
+    assigneeId: null,
+    assetId: null,
+    tags: ["구매", "하드웨어"],
+    companyId: COMPANY_ID,
+    createdAt: new Date("2024-11-20"),
+    updatedAt: new Date("2024-11-20"),
+  },
+]
+
+export const mockDashboardSummary: DashboardSummary = {
+  totalAssets: 156,
+  assetsByState: {
+    ready: 12,
+    inUse: 128,
+    maintenance: 8,
+    pendingDisposal: 5,
+    disposed: 3,
+  },
+  assetsByType: {
+    tangible: 98,
+    intangible: 58,
+  },
+  ticketsByStatus: {
+    open: 7,
+    inProgress: 3,
+    completed: 24,
+    rejected: 2,
+  },
+  expiringAssets: 4,
+  recentActivity: 18,
+}
+
+export const mockAssetTrendData: AssetTrendData[] = [
+  { date: "6월", total: 142, added: 8, disposed: 2 },
+  { date: "7월", total: 145, added: 5, disposed: 2 },
+  { date: "8월", total: 148, added: 6, disposed: 3 },
+  { date: "9월", total: 151, added: 4, disposed: 1 },
+  { date: "10월", total: 154, added: 5, disposed: 2 },
+  { date: "11월", total: 156, added: 3, disposed: 1 },
+]
